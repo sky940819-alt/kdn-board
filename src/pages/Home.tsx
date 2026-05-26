@@ -82,13 +82,13 @@ const Home = (): ReactElement => {
                 대한민국 에너지 전환을 이끄는 종합 에너지 기술 기업입니다.
               </p>
               <div className="hero-actions">
-                <Link to="/business" className="btn btn-white">
+                <Link to="/business" className="btn btn-primary">
                   사업영역 보기
                   <svg className="btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path d="M3 8h10M9 4l4 4-4 4" />
                   </svg>
                 </Link>
-                <Link to="/contact" className="btn btn-outline" style={{ color: 'rgba(255,255,255,0.85)', borderColor: 'rgba(255,255,255,0.35)' }}>
+                <Link to="/contact" className="btn btn-outline">
                   문의하기
                 </Link>
               </div>
