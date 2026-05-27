@@ -1,9 +1,9 @@
 import { useState, type ReactElement, type FormEvent } from 'react'
 
 const OFFICES = [
-  { name: '본사 (나주)', addr: '전라남도 나주시 빛가람로 760', tel: '061-345-3000', fax: '061-345-3009' },
-  { name: '서울 사무소', addr: '서울특별시 강남구 테헤란로 152, 12층', tel: '02-6200-1000', fax: '02-6200-1009' },
-  { name: '부산 사무소', addr: '부산광역시 해운대구 센텀중앙로 55', tel: '051-720-5000', fax: '051-720-5009' },
+  { name: '본사 (전남 나주)', addr: '전라남도 나주시 빛가람로 661', tel: '061-931-7114', fax: '061-931-7119' },
+  { name: '서울 사무소', addr: '서울특별시 중구 세종대로 39, 한국전력빌딩', tel: '02-3456-7114', fax: '02-3456-7119' },
+  { name: '해외사업팀', addr: '전라남도 나주시 빛가람로 661 (본사 내)', tel: '061-931-7200', fax: '061-931-7209' },
 ]
 
 const Contact = (): ReactElement => {
@@ -20,8 +20,8 @@ const Contact = (): ReactElement => {
       <section className="page-header-ed">
         <div className="container">
           <div className="eyebrow">Contact Us</div>
-          <h1>문의하기</h1>
-          <p>에너지 기술 솔루션, 사업 제안, 채용 문의 등 모든 문의를 환영합니다.</p>
+          <h1>국민소통</h1>
+          <p>한전KDN에 대한 문의, 제안, 민원을 환영합니다.</p>
         </div>
       </section>
 
@@ -66,7 +66,7 @@ const Contact = (): ReactElement => {
                     <strong style={{ color: 'var(--navy-800)' }}>이메일</strong><br />
                     일반 문의: info@kdn.com<br />
                     채용 문의: recruit@kdn.com<br />
-                    기술 문의: tech@kdn.com
+                    기술·사업 문의: biz@kdn.com
                   </div>
                 </div>
               </div>
@@ -81,8 +81,8 @@ const Contact = (): ReactElement => {
 
               {sent ? (
                 <div style={{
-                  background: 'var(--navy-100)',
-                  border: '1px solid var(--navy-200)',
+                  background: 'var(--kdn-red-100)',
+                  border: '1px solid var(--kdn-red-200)',
                   borderRadius: 'var(--radius-md)',
                   padding: '48px',
                   textAlign: 'center',
@@ -122,7 +122,7 @@ const Contact = (): ReactElement => {
                           transition: 'border-color 0.2s',
                           fontFamily: 'inherit',
                         }}
-                        onFocus={(e) => (e.target.style.borderColor = 'var(--gold)')}
+                        onFocus={(e) => (e.target.style.borderColor = 'var(--kdn-red-500)')}
                         onBlur={(e) => (e.target.style.borderColor = 'var(--border-light)')}
                       />
                     </div>
@@ -147,7 +147,7 @@ const Contact = (): ReactElement => {
                         fontFamily: 'inherit',
                         lineHeight: 1.6,
                       }}
-                      onFocus={(e) => (e.target.style.borderColor = 'var(--gold)')}
+                      onFocus={(e) => (e.target.style.borderColor = 'var(--kdn-red-500)')}
                       onBlur={(e) => (e.target.style.borderColor = 'var(--border-light)')}
                     />
                   </div>

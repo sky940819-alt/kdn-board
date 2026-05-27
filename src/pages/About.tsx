@@ -1,20 +1,20 @@
 import type { ReactElement } from 'react'
 
 const HISTORY = [
-  { year: '1985', desc: '한국전력기술(KDN) 창립' },
-  { year: '1992', desc: '전력 IT 사업부 신설 · SCADA 시스템 국산화 성공' },
+  { year: '1992', desc: '한전KDN 창립 (한전 출자 법인, Korea Electric Power Data & Network)' },
+  { year: '1995', desc: '전력 정보화 사업 본격 착수 · 배전자동화 시스템 구축 시작' },
   { year: '2001', desc: '배전 자동화 시스템 전국 확대 완료' },
-  { year: '2009', desc: '스마트그리드 파일럿 사업 착수 (제주 실증 단지)' },
-  { year: '2015', desc: '해외 수출 첫 성과 — 사우디 변전소 EPC 수주' },
-  { year: '2019', desc: 'AI 에너지 플랫폼 "Grid AI" 출시' },
-  { year: '2022', desc: '탄소중립 에너지 전환 로드맵 2030 발표' },
-  { year: '2026', desc: 'Digital KDN 선언 — AI·데이터 기반 스마트 에너지 기업 전환' },
+  { year: '2009', desc: '스마트그리드 국가 실증 사업 참여 (제주 실증 단지)' },
+  { year: '2014', desc: '나주 혁신도시 본사 이전 (전라남도 나주시 빛가람로 661)' },
+  { year: '2018', desc: '해외 에너지ICT 수출 20개국 달성' },
+  { year: '2022', desc: '탄소중립 에너지 전환 로드맵 발표 · ESG경영 선언' },
+  { year: '2026', desc: 'Digital KDN 선언 — AI 기반 에너지ICT 글로벌 리더 도약' },
 ]
 
 const LEADERS = [
-  { name: '박현준', title: '대표이사', bg: '#4C1D95' },
-  { name: '이정민', title: '부사장 (기술총괄)', bg: '#5B21B6' },
-  { name: '최수아', title: '전무 (사업개발)', bg: '#7C3AED' },
+  { name: '대표이사', title: '한전KDN 대표이사 사장', bg: '#E4002B' },
+  { name: '부사장', title: '기술·사업 총괄', bg: '#C9002A' },
+  { name: '전무', title: '경영지원 총괄', bg: '#F0851A' },
 ]
 
 const About = (): ReactElement => (
@@ -23,7 +23,7 @@ const About = (): ReactElement => (
       <div className="container">
         <div className="eyebrow">Company Overview</div>
         <h1>회사소개</h1>
-        <p>에너지 기술의 새로운 표준을 만들어가는 KDN을 소개합니다.</p>
+        <p>한전KDN의 비전과 역사, 그리고 에너지ICT 사업을 소개합니다.</p>
       </div>
     </section>
 
@@ -32,19 +32,19 @@ const About = (): ReactElement => (
       <div className="container">
         <div className="about-grid">
           <div>
-            <div className="section-num">&mdash; About KDN</div>
+            <div className="section-num">&mdash; About 한전KDN</div>
             <h2 className="section-title-ed">
-              40년의 신뢰,<br />
-              <span className="accent">에너지 혁신</span>의 역사
+              1992년 창립,<br />
+              <span className="accent">에너지ICT 혁신</span>의 역사
             </h2>
             <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'var(--text-secondary)', marginBottom: '24px' }}>
-              KDN(한국전력기술)은 1985년 창립 이래 대한민국 전력 인프라의 설계·구축·운영을 담당해온
-              에너지 기술 전문 기업입니다. 전력 IT, 스마트그리드, 신재생에너지, AI·데이터 플랫폼 등
-              6개 핵심 사업 영역에서 혁신을 이어오고 있습니다.
+              한전KDN은 1992년 창립 이래 대한민국 전력 디지털화를 이끌어온
+              에너지ICT 전문 공기업입니다. 발전·급전·송변전·배전·판매·전력통신·
+              정보보호·에너지신사업 등 전력 전 분야에서 ICT 솔루션을 제공합니다.
             </p>
             <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'var(--text-secondary)' }}>
-              2026년 "Digital KDN" 선언을 통해 AI 기반 스마트 에너지 기업으로의 전환을 선언하고,
-              탄소중립 에너지 전환 시대를 이끌어가고 있습니다.
+              "디지털 혁신, 에너지 대전환을 선도하는 글로벌 에너지ICT의 중심"을
+              비전으로, AI·빅데이터·클라우드 기반 차세대 에너지 서비스를 개척해 나갑니다.
             </p>
           </div>
           <div className="about-panel">
@@ -52,14 +52,14 @@ const About = (): ReactElement => (
               COMPANY PROFILE
             </div>
             {[
-              ['회사명', 'KDN 한국전력기술(주)'],
-              ['설립일', '1985년 3월 15일'],
-              ['대표이사', '박현준'],
-              ['임직원', '2,800명+'],
-              ['본사', '전라남도 나주시 빛가람로 760'],
-              ['사업영역', '전력 인프라 · 스마트그리드 · AI 플랫폼'],
-              ['연간 매출', '약 1조 2,000억 원 (2025)'],
-              ['해외 사업', '15개국 진출'],
+              ['회사명', '한전KDN (주)'],
+              ['영문명', 'Korea Electric Power Data & Network Co., Ltd.'],
+              ['설립일', '1992년'],
+              ['임직원', '3,500명+'],
+              ['본사', '전라남도 나주시 빛가람로 661'],
+              ['전화', '061-931-7114'],
+              ['사업자', '116-81-32242'],
+              ['해외사업', '30개국 진출'],
             ].map(([k, v]) => (
               <div className="about-panel-row" key={k}>
                 <span className="about-panel-key">{k}</span>
@@ -77,9 +77,9 @@ const About = (): ReactElement => (
           </h2>
           <div className="vision-grid">
             {[
-              { num: 'V', label: '비전', desc: '스마트 에너지 기술로 지속 가능한 미래를 선도하는 대한민국 대표 에너지 기업' },
-              { num: 'M', label: '미션', desc: '혁신적인 에너지 기술과 디지털 전환으로 사회적 가치를 창출하고 국민 생활에 기여한다' },
-              { num: 'V', label: '핵심가치', desc: '기술 혁신 · 안전 최우선 · 고객 신뢰 · 지속 성장 · 사회 책임' },
+              { num: 'V', label: '비전', desc: '디지털 혁신, 에너지 대전환을 선도하는 글로벌 에너지ICT의 중심' },
+              { num: 'M', label: '미션', desc: '전력 ICT 혁신으로 안정적 에너지 공급과 사회적 가치를 창출한다' },
+              { num: 'C', label: '핵심가치', desc: '혁신 · 신뢰 · 안전 · 협력 · 도전' },
             ].map((item, i) => (
               <div className="vision-card" key={i}>
                 <div className="vision-num">{item.num}</div>

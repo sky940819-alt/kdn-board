@@ -3,57 +3,93 @@ import type { ReactElement } from 'react'
 const BUSINESSES = [
   {
     num: '01',
-    icon: '⚡',
-    tag: 'Power Infrastructure',
-    title: '전력 인프라',
-    desc: '345kV 초고압 변전소 설계·건설부터 배전 자동화 시스템 구축까지 전력 인프라 전 분야를 아우릅니다. KEPCO 협력사로서 전국 154개 변전소 운영 노하우를 보유하고 있습니다.',
-    points: ['초고압 변전소 설계·건설 (345kV, 154kV)', '배전 자동화 시스템 (DAS)', '지중화 케이블 시공 관리', '전력 기자재 품질 관리', '전력계통 안정화 솔루션'],
-    tag2: '국내 시장점유율 1위',
+    icon: '🔆',
+    tag: 'Generation · Dispatch ICT',
+    title: '발전·급전ICT',
+    desc: '발전소 운영 정보화 및 실시간 급전자동화 시스템으로 전력 수급 균형을 유지하고 전력 계통의 안정 운영을 지원합니다.',
+    points: [
+      '발전소 운영정보 시스템 (POMIS)',
+      '실시간 급전자동화 (EMS)',
+      '발전 계획 및 연료 관리 최적화',
+      '전력거래소 연계 정보 시스템',
+      '발전 빅데이터 분석 플랫폼',
+    ],
+    tag2: '전력거래소·발전사 핵심 파트너',
   },
   {
     num: '02',
-    icon: '🔋',
-    tag: 'Smart Grid',
-    title: '스마트그리드',
-    desc: 'IoT 센서·AI·빅데이터를 결합한 지능형 전력망으로 실시간 부하 예측과 최적 전력 배분을 실현합니다. 전국 1,200만 스마트미터 운영 데이터를 기반으로 합니다.',
-    points: ['AMI(스마트미터) 구축 및 운영', '실시간 전력 수요 예측 AI', '피크 부하 저감 자동화', '전기차 충전 인프라 연계', '에너지 저장장치(ESS) 통합 관리'],
-    tag2: '스마트미터 1,200만 대 운영',
+    icon: '⚡',
+    tag: 'Transmission · Substation ICT',
+    title: '송변전ICT',
+    desc: '초고압 송전망 및 변전소 디지털화로 전국 전력망의 안정적 운영과 효율적 유지·보수를 실현합니다.',
+    points: [
+      'SCADA/EMS 변전소 자동화',
+      'IEC 61850 디지털 변전소 구축',
+      'GIS 기반 송전선로 관리 시스템',
+      '변전설비 예방정비 AI 플랫폼',
+      '원격 감시·제어 통합 관제',
+    ],
+    tag2: '전국 변전소 운영 솔루션 1위',
   },
   {
     num: '03',
-    icon: '🏗️',
-    tag: 'Digital Substation',
-    title: '디지털 변전',
-    desc: 'IEC 61850 국제 표준 기반 디지털 변전소를 구축하여 설비 운영 효율을 높이고 유지보수 비용을 절감합니다. 실시간 설비 상태 모니터링으로 고장 예방을 실현합니다.',
-    points: ['IEC 61850 기반 변전 자동화', 'GIS(가스절연개폐장치) 디지털화', '원격 제어·감시 시스템 (SCADA)', '변전소 AI 예방 정비', '사이버 보안 통합 관제'],
-    tag2: '국내 디지털 변전 선도 기업',
+    icon: '🔌',
+    tag: 'Distribution ICT',
+    title: '배전ICT',
+    desc: '배전 지능화·자동화 시스템으로 정전 구간을 자동 분리·복구하여 전력 품질과 공급 신뢰도를 향상합니다.',
+    points: [
+      '배전자동화 시스템 (DAS)',
+      '지능형 전력망 (Smart Grid) 구축',
+      '배전 GIS 기반 설비 관리',
+      '실시간 배전계통 모니터링',
+      '배전 운영센터 통합 시스템',
+    ],
+    tag2: '전국 배전자동화 선도',
   },
   {
     num: '04',
-    icon: '🌿',
-    tag: 'Renewable Energy',
-    title: '신재생에너지',
-    desc: '태양광, 해상풍력, 수소 연료전지 등 다양한 신재생에너지원을 전력망에 안정적으로 연계하는 통합 시스템을 구축합니다.',
-    points: ['해상풍력 연계 변전 시스템', '태양광 발전소 EPC', 'ESS 통합 관제 플랫폼', '수소 연료전지 계통 연계', 'RE100 솔루션 컨설팅'],
-    tag2: '신재생 연계 용량 5GW+',
+    icon: '📊',
+    tag: 'Sales ICT',
+    title: '판매ICT',
+    desc: 'AMI(스마트미터) 기반 전력 판매 정보화로 실시간 전력 사용량 관리 및 에너지 효율화 서비스를 제공합니다.',
+    points: [
+      'AMI(Advanced Metering Infrastructure) 구축',
+      '스마트미터 데이터 수집·관리 플랫폼',
+      '전기요금 청구·수납 정보 시스템',
+      '전기차 충전 인프라 연계 (CHA-ON)',
+      '에너지 DR(수요반응) 시스템',
+    ],
+    tag2: '스마트미터 2,300만 대 운영',
   },
   {
     num: '05',
-    icon: '🤖',
-    tag: 'AI · Data Platform',
-    title: 'AI·데이터 플랫폼',
-    desc: '전력 빅데이터와 머신러닝을 활용한 에너지 AI 플랫폼 "Grid AI"로 설비 고장 예측, 에너지 최적화, 수요 관리를 자동화합니다.',
-    points: ['설비 이상 징후 예측 AI', '전력 수요 예측 모델', 'Digital Twin 전력망 시뮬레이션', '에너지 빅데이터 분석 플랫폼', 'API 기반 외부 연계 솔루션'],
-    tag2: 'Grid AI 2026 — 특허 28건',
+    icon: '🛡️',
+    tag: 'Power Telecom / Info-Security ICT',
+    title: '전력통신/정보보호ICT',
+    desc: '전력 전용 통신망 구축·운영 및 OT/IT 통합 사이버 보안 체계로 국가 핵심 에너지 인프라를 보호합니다.',
+    points: [
+      '전력 광케이블(OPGW) 통신망 운영',
+      'OT/IT 통합 보안 관제센터 운영',
+      'SCADA 사이버 위협 탐지·대응',
+      '전력 정보보호 컨설팅 및 인증',
+      '전력통신 위성·마이크로웨이브 백업망',
+    ],
+    tag2: 'ISMS-P 인증 · 국정원 검증필',
   },
   {
     num: '06',
-    icon: '🔐',
-    tag: 'Cyber Security',
-    title: '사이버 보안',
-    desc: '전력 SCADA·OT 시스템 특화 사이버 보안 솔루션으로 국가 핵심 에너지 인프라를 사이버 위협으로부터 보호합니다.',
-    points: ['OT/IT 통합 보안 관제', 'SCADA 이상 행위 탐지', '전력 계통 사이버 위협 대응', '보안 취약점 진단·컨설팅', '국가 사이버 보안 인증 획득'],
-    tag2: 'ISMS-P 인증 · 국정원 검증',
+    icon: '🌱',
+    tag: 'New Energy Business',
+    title: '에너지신사업',
+    desc: '신재생에너지, ESS, 마이크로그리드, 수소 등 에너지 전환 시대를 선도하는 신사업 ICT 솔루션을 개척합니다.',
+    points: [
+      '신재생에너지 연계 계통 ICT',
+      'ESS 통합 에너지 관리 시스템 (EMS)',
+      '마이크로그리드 운영 최적화',
+      '수소·연료전지 계통 연계 솔루션',
+      '탄소중립 에너지 데이터 플랫폼',
+    ],
+    tag2: '에너지 전환 신사업 선도',
   },
 ]
 
@@ -61,9 +97,9 @@ const Business = (): ReactElement => (
   <>
     <section className="page-header-ed">
       <div className="container">
-        <div className="eyebrow">Business Areas</div>
-        <h1>사업영역</h1>
-        <p>전력 인프라부터 AI 에너지 플랫폼까지 6개 핵심 영역에서 혁신을 이어갑니다.</p>
+        <div className="eyebrow">Solutions &amp; Services</div>
+        <h1>솔루션·서비스</h1>
+        <p>한전KDN의 6대 에너지ICT 사업영역을 소개합니다.</p>
       </div>
     </section>
 
@@ -91,8 +127,8 @@ const Business = (): ReactElement => (
                 </h3>
                 <div style={{
                   display: 'inline-block',
-                  background: 'var(--navy-100)',
-                  color: 'var(--navy-700)',
+                  background: 'var(--kdn-red-100)',
+                  color: 'var(--kdn-red-700)',
                   fontSize: '11px',
                   fontWeight: 700,
                   padding: '4px 12px',
