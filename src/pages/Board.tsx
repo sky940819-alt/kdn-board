@@ -3,6 +3,8 @@ import {
   type ReactElement, type DragEvent as RDE, type ChangeEvent, type FormEvent,
 } from 'react'
 import { supabase } from '../lib/supabase'
+import { useAuth } from '../contexts/AuthContext'
+import { logActivity } from '../lib/logger'
 
 // ─────────────────────────────────────────────────────────────
 //  Types
@@ -214,38 +216,50 @@ const BoardList = ({ onSelect, onWrite }: BLProps): ReactElement => {
   const [keyword, setKeyword]     = useState('')
   const [inputKw, setInputKw]     = useState('')
   const [loading, setLoading]     = useState(true)
+  const [loadErr, setLoadErr]     = useState<string | null>(null)
   const [attMap, setAttMap]       = useState<Record<string, number>>({})
 
   const load = async (p: number, kw: string) => {
     setLoading(true)
-    const from = (p - 1) * PER_PAGE
-    let q = supabase
-      .from('posts')
-      .select('*', { count: 'exact' })
-    if (kw.trim())
-      q = q.or(`title.ilike.%${kw}%,content.ilike.%${kw}%,author.ilike.%${kw}%`)
-    const { data, count, error } = await q
-      .order('created_at', { ascending: false })
-      .range(from, from + PER_PAGE - 1)
+    setLoadErr(null)
+    try {
+      const from = (p - 1) * PER_PAGE
+      let q = supabase
+        .from('posts')
+        .select('*', { count: 'exact' })
+      if (kw.trim())
+        q = q.or(`title.ilike.%${kw}%,content.ilike.%${kw}%,author.ilike.%${kw}%`)
+      const { data, count, error } = await q
+        .order('created_at', { ascending: false })
+        .range(from, from + PER_PAGE - 1)
 
-    if (!error && data) {
-      setPosts(data as Post[])
-      setTotal(count ?? 0)
+      if (error) {
+        console.error('[Board] 게시물 조회 오류:', error)
+        setLoadErr(`데이터를 불러올 수 없습니다. (${error.message})`)
+      } else if (data) {
+        setPosts(data as Post[])
+        setTotal(count ?? 0)
 
-      if (data.length) {
-        const ids = (data as Post[]).map(r => r.id)
-        const { data: ad } = await supabase
-          .from('attachments')
-          .select('post_id')
-          .in('post_id', ids)
-        const m: Record<string, number> = {}
-        ad?.forEach(a => { m[a.post_id] = (m[a.post_id] ?? 0) + 1 })
-        setAttMap(m)
-      } else {
-        setAttMap({})
+        if (data.length) {
+          const ids = (data as Post[]).map(r => r.id)
+          const { data: ad } = await supabase
+            .from('attachments')
+            .select('post_id')
+            .in('post_id', ids)
+          const m: Record<string, number> = {}
+          ad?.forEach(a => { m[a.post_id] = (m[a.post_id] ?? 0) + 1 })
+          setAttMap(m)
+        } else {
+          setAttMap({})
+        }
       }
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : '알 수 없는 오류'
+      console.error('[Board] 예외 발생:', e)
+      setLoadErr(`게시판 로딩 중 오류가 발생했습니다. (${msg})`)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   useEffect(() => { load(page, keyword) }, [page, keyword])
@@ -294,6 +308,32 @@ const BoardList = ({ onSelect, onWrite }: BLProps): ReactElement => {
           </button>
         </div>
       </div>
+
+      {/* 오류 메시지 */}
+      {loadErr && !loading && (
+        <div style={{
+          background: 'rgba(228,0,43,0.12)',
+          border: '1px solid rgba(228,0,43,0.35)',
+          borderRadius: '8px',
+          padding: '16px 20px',
+          margin: '16px 0',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          fontSize: '14px',
+          color: '#ff6b6b',
+        }}>
+          <span>⚠️</span>
+          <span>{loadErr}</span>
+          <button
+            className="btn btn-outline"
+            style={{ marginLeft: 'auto', fontSize: '12px', padding: '5px 12px' }}
+            onClick={() => load(page, keyword)}
+          >
+            다시 시도
+          </button>
+        </div>
+      )}
 
       {/* 테이블 */}
       {loading ? <Spinner /> : (
@@ -394,6 +434,7 @@ const BoardDetail = ({ id, onBack, onEdit }: BDProps): ReactElement => {
   const [modal, setModal]           = useState<'edit' | 'delete' | null>(null)
   const [dlId, setDlId]             = useState<string | null>(null)
   const [errMsg, setErrMsg]         = useState('')
+  const { user } = useAuth()
 
   useEffect(() => {
     const init = async () => {
@@ -408,11 +449,16 @@ const BoardDetail = ({ id, onBack, onEdit }: BDProps): ReactElement => {
         supabase.rpc('increment_views', { pid: id }).then(() => {
           setPost(prev => prev ? { ...prev, views: prev.views + 1 } : prev)
         })
+        // 활동 로그 — 게시물 조회
+        if (user) {
+          void logActivity(user.id, user.email!, 'post_view', id, (p as Post).title)
+        }
       }
       if (a) setAtts(a as Attachment[])
       setLoading(false)
     }
     init()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   const handlePw = async (pw: string) => {
@@ -425,6 +471,8 @@ const BoardDetail = ({ id, onBack, onEdit }: BDProps): ReactElement => {
       if (atts.length)
         await supabase.storage.from(BUCKET).remove(atts.map(a => a.filepath))
       await supabase.from('posts').delete().eq('id', id)
+      // 활동 로그 — 게시물 삭제
+      if (user) void logActivity(user.id, user.email!, 'post_delete', id, post.title)
       onBack()
     }
   }
@@ -580,6 +628,7 @@ type BFProps = {
 }
 
 const BoardForm = ({ mode, postId, onDone, onCancel }: BFProps): ReactElement => {
+  const { user } = useAuth()
   const [title,     setTitle]     = useState('')
   const [author,    setAuthor]    = useState('익명')
   const [password,  setPassword]  = useState('')
@@ -591,6 +640,13 @@ const BoardForm = ({ mode, postId, onDone, onCancel }: BFProps): ReactElement =>
   const [saving,    setSaving]    = useState(false)
   const [error,     setError]     = useState('')
   const [progress,  setProgress]  = useState('')
+
+  // 로그인 사용자 — 작성자 자동 설정
+  useEffect(() => {
+    if (mode === 'write' && user?.email) {
+      setAuthor(user.email.split('@')[0])
+    }
+  }, [mode, user])
 
   useEffect(() => {
     if (mode !== 'edit' || !postId) return
@@ -639,6 +695,8 @@ const BoardForm = ({ mode, postId, onDone, onCancel }: BFProps): ReactElement =>
           .single()
         if (e || !data) throw new Error(e?.message ?? '게시물 저장 실패')
         pid = data.id
+        // 활동 로그 — 게시물 작성
+        if (user) void logActivity(user.id, user.email!, 'post_create', pid, title.trim())
       } else {
         setProgress('게시물 수정 중…')
         await supabase
@@ -650,6 +708,8 @@ const BoardForm = ({ mode, postId, onDone, onCancel }: BFProps): ReactElement =>
             updated_at: new Date().toISOString(),
           })
           .eq('id', pid)
+        // 활동 로그 — 게시물 수정
+        if (user) void logActivity(user.id, user.email!, 'post_edit', pid, title.trim())
       }
 
       // ── 기존 첨부파일 삭제 ──
