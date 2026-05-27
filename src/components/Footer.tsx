@@ -31,8 +31,6 @@ const Footer = (): ReactElement => (
           <ul>
             <li><Link to="/about">회사소개</Link></li>
             <li><Link to="/business">솔루션·서비스</Link></li>
-            <li><Link to="/news">정보공개</Link></li>
-            <li><Link to="/news">입찰·고객지원</Link></li>
             <li><Link to="/contact">국민소통</Link></li>
           </ul>
         </div>

@@ -4,10 +4,6 @@ import { Link, useLocation } from 'react-router-dom'
 const LINKS = [
   { path: '/about',    label: '회사소개' },
   { path: '/business', label: '솔루션·서비스' },
-  { path: '/business', label: 'ESG경영' },
-  { path: '/news',     label: '정보공개' },
-  { path: '/news',     label: '입찰·고객지원' },
-  { path: '/news',     label: '인재채용' },
   { path: '/contact',  label: '국민소통' },
 ]
 
