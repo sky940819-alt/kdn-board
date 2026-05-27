@@ -122,29 +122,42 @@ export const AuthProvider = ({ children }: { children: ReactNode }): ReactElemen
     password: string,
     consentIp?: string,
   ): Promise<SignUpResult> => {
+    // ── Admin 경로: service key 있으면 이메일 발송 없이 즉시 계정 생성 ──
+    // signUp() 대신 admin.createUser()를 먼저 사용해 Supabase 이메일
+    // rate limit(시간당 3~4건)과 인증 대기 문제를 완전히 우회
+    if (supabaseAdmin) {
+      const { data: adminData, error: adminErr } =
+        await supabaseAdmin.auth.admin.createUser({
+          email,
+          password,
+          email_confirm: true,   // 이메일 인증 없이 즉시 확인 처리
+        })
+      if (adminErr) {
+        const msg = adminErr.message.toLowerCase()
+        if (msg.includes('already registered') || msg.includes('already been registered') || msg.includes('already exists'))
+          return { error: '이미 사용 중인 이메일입니다.' }
+        return { error: '회원가입 중 오류가 발생했습니다.' }
+      }
+      // 생성 즉시 로그인
+      const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password })
+      if (adminData.user) {
+        void logConsent(adminData.user.id, email, consentIp)
+        if (!signInErr) void logLogin(adminData.user.id, email, 'login')
+      }
+      return { error: null, needsConfirm: false }
+    }
+
+    // ── Fallback: service key 없을 때 일반 signUp ────────────────
     const { data, error } = await supabase.auth.signUp({ email, password })
     if (error) {
       const msg = error.message.toLowerCase()
       if (msg.includes('already registered') || msg.includes('already been registered'))
         return { error: '이미 사용 중인 이메일입니다.' }
+      if (msg.includes('rate limit') || msg.includes('429'))
+        return { error: '잠시 후 다시 시도해주세요. (이메일 발송 한도 초과)' }
       return { error: '회원가입 중 오류가 발생했습니다.' }
     }
     let needsConfirm = !data.session
-
-    // ── 이메일 인증 임시 비활성화 ──────────────────────────────
-    // supabaseAdmin(service key)이 있으면 즉시 이메일 확인 처리 후 자동 로그인
-    if (needsConfirm && data.user && supabaseAdmin) {
-      const { error: confirmErr } = await supabaseAdmin.auth.admin.updateUserById(
-        data.user.id,
-        { email_confirm: true },
-      )
-      if (!confirmErr) {
-        const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password })
-        if (!signInErr) needsConfirm = false
-      }
-    }
-    // ────────────────────────────────────────────────────────────
-
     if (data.user) {
       void logConsent(data.user.id, email, consentIp)
       if (!needsConfirm) void logLogin(data.user.id, email, 'login')
