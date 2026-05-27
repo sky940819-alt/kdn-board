@@ -12,9 +12,9 @@ const HISTORY = [
 ]
 
 const LEADERS = [
-  { name: '박현준', title: '대표이사', bg: '#1B2A4A' },
-  { name: '이정민', title: '부사장 (기술총괄)', bg: '#2A3A5C' },
-  { name: '최수아', title: '전무 (사업개발)', bg: '#3D6FE0' },
+  { name: '박현준', title: '대표이사', bg: '#4C1D95' },
+  { name: '이정민', title: '부사장 (기술총괄)', bg: '#5B21B6' },
+  { name: '최수아', title: '전무 (사업개발)', bg: '#7C3AED' },
 ]
 
 const About = (): ReactElement => (

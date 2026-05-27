@@ -10,10 +10,10 @@ const NEWS_LIST = [
 ]
 
 const CAT_COLORS: Record<string, string> = {
-  '공지사항': '#3D6FE0',
-  '수주소식': '#00855A',
-  '기술혁신': '#C8102E',
-  '채용공고': '#D4760A',
+  '공지사항': '#7C3AED',
+  '수주소식': '#0891B2',
+  '기술혁신': '#DC2626',
+  '채용공고': '#059669',
 }
 
 const News = (): ReactElement => (
