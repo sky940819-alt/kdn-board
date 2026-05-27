@@ -12,7 +12,7 @@ const NEWS_LIST = [
 const CAT_COLORS: Record<string, string> = {
   '공지사항': '#E4002B',
   '수주소식': '#0891B2',
-  '기술혁신': '#F0851A',
+  '기술혁신': '#8B5CF6',
   '채용공고': '#059669',
   '보도자료': '#54585A',
 }

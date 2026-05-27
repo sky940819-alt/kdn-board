@@ -14,7 +14,7 @@ const HISTORY = [
 const LEADERS = [
   { name: '대표이사', title: '한전KDN 대표이사 사장', bg: '#E4002B' },
   { name: '부사장', title: '기술·사업 총괄', bg: '#C9002A' },
-  { name: '전무', title: '경영지원 총괄', bg: '#F0851A' },
+  { name: '전무', title: '경영지원 총괄', bg: '#1D4ED8' },
 ]
 
 const About = (): ReactElement => (

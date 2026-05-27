@@ -114,10 +114,11 @@ const Contact = (): ReactElement => {
                         onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
                         style={{
                           padding: '11px 14px',
-                          border: '1.5px solid var(--border-light)',
+                          border: '1.5px solid var(--border-1)',
                           borderRadius: 'var(--radius-sm)',
                           fontSize: '14px',
                           color: 'var(--text-primary)',
+                          background: 'var(--bg-elevated)',
                           outline: 'none',
                           transition: 'border-color 0.2s',
                           fontFamily: 'inherit',
@@ -138,10 +139,11 @@ const Contact = (): ReactElement => {
                       onChange={(e) => setForm((f) => ({ ...f, body: e.target.value }))}
                       style={{
                         padding: '11px 14px',
-                        border: '1.5px solid var(--border-light)',
+                        border: '1.5px solid var(--border-1)',
                         borderRadius: 'var(--radius-sm)',
                         fontSize: '14px',
                         color: 'var(--text-primary)',
+                        background: 'var(--bg-elevated)',
                         resize: 'vertical',
                         outline: 'none',
                         fontFamily: 'inherit',

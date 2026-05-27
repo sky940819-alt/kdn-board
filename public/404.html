@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>한전KDN</title>
+    <script>
+      // GitHub Pages SPA redirect trick
+      // 서브 경로 직접 접근·새로고침 시 404 대신 index.html 로 우회
+      // pathSegmentsToKeep = 1 → /kdn-board (basename) 만 유지
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 2).join('/') +
+        '/?p=' + l.pathname.split('/').slice(2).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
