@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1330 940" width="1330" height="940">
+  <defs>
+    <!-- Diagonal white stripe pattern (continues across both ovals) -->
+    <pattern id="diagonalStripes" width="52" height="52" patternUnits="userSpaceOnUse" patternTransform="rotate(-43)">
+      <rect x="0" y="0" width="26" height="52" fill="white" fill-opacity="0.52"/>
+    </pattern>
+    <!-- Clip for left oval -->
+    <clipPath id="leftOval">
+      <ellipse cx="405" cy="470" rx="432" ry="382"/>
+    </clipPath>
+    <!-- Clip for right oval -->
+    <clipPath id="rightOval">
+      <ellipse cx="925" cy="470" rx="432" ry="382"/>
+    </clipPath>
+  </defs>
+
+  <!-- === Left Oval === -->
+  <ellipse cx="405" cy="470" rx="432" ry="382" fill="#C0C0C0"/>
+  <ellipse cx="405" cy="470" rx="432" ry="382" fill="url(#diagonalStripes)"/>
+
+  <!-- === Right Oval === -->
+  <ellipse cx="925" cy="470" rx="432" ry="382" fill="#C0C0C0"/>
+  <ellipse cx="925" cy="470" rx="432" ry="382" fill="url(#diagonalStripes)"/>
+
+  <!-- === "Kdn" text in KDN Red (#E4002B) === -->
+  <text
+    x="580"
+    y="600"
+    font-family="'Arial Black', 'Arial Bold', Arial, Helvetica, sans-serif"
+    font-size="430"
+    font-weight="900"
+    fill="#E4002B"
+    text-anchor="middle"
+    dominant-baseline="auto"
+    letter-spacing="-8">Kdn</text>
+
+  <!-- === Orange double-plus symbol (upper right) === -->
+  <!-- First "+" — upper left cross -->
+  <rect x="1040" y="213" width="46" height="185" rx="7" fill="#F0851A"/>
+  <rect x="968"  y="279" width="185" height="46" rx="7" fill="#F0851A"/>
+
+  <!-- Second "+" — lower right cross (offset diagonally) -->
+  <rect x="1160" y="308" width="46" height="185" rx="7" fill="#F0851A"/>
+  <rect x="1088" y="374" width="185" height="46" rx="7" fill="#F0851A"/>
+</svg>
