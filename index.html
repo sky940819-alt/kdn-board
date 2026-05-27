@@ -6,8 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="한전KDN — 디지털 혁신, 에너지 대전환을 선도하는 글로벌 에너지ICT의 중심. Korea Electric Power Data &amp; Network Co., Ltd." />
     <title>한전KDN | 글로벌 에너지ICT의 중심</title>
-    <script type="module" crossorigin src="/kdn-board/assets/index-CyPyKVge.js"></script>
-    <link rel="stylesheet" crossorigin href="/kdn-board/assets/index-KT9Ti5HJ.css">
+    <script>
+      // GitHub Pages SPA redirect 복원
+      // 404.html 에서 넘겨준 ?p= 경로를 history.replaceState 로 복원한 뒤 React 가 렌더
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var p = params.get('p');
+        if (p != null) {
+          var q = params.get('q');
+          var base = window.location.pathname; // /kdn-board/
+          window.history.replaceState(
+            null, null,
+            base + p.replace(/~and~/g, '&') + (q ? '?' + q.replace(/~and~/g, '&') : '') + window.location.hash
+          );
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/kdn-board/assets/index-C7GJIs3D.js"></script>
+    <link rel="stylesheet" crossorigin href="/kdn-board/assets/index-Ci0ePxzR.css">
   </head>
   <body>
     <div id="root"></div>
