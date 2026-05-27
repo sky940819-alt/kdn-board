@@ -7,6 +7,7 @@ import Business from './pages/Business'
 import News from './pages/News'
 import Contact from './pages/Contact'
 import CurriculumDay25 from './pages/CurriculumDay25'
+import Board from './pages/Board'
 import type { ReactElement } from 'react'
 
 function App(): ReactElement {
@@ -22,6 +23,7 @@ function App(): ReactElement {
             <Route path="/news" element={<News />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/curriculum/day25" element={<CurriculumDay25 />} />
+            <Route path="/board" element={<Board />} />
           </Routes>
         </main>
         <Footer />

@@ -15,6 +15,7 @@ const LINKS: NavItem[] = [
       { path: '/curriculum/day25', label: '2.5일차 — 2026 개발 트렌드' },
     ],
   },
+  { kind: 'link',     path: '/board',    label: '자유게시판' },
   { kind: 'link',     path: '/contact',  label: '국민소통' },
 ]
 
