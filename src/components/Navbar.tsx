@@ -1,16 +1,29 @@
-import { useState, useEffect, type ReactElement } from 'react'
+import { useState, useEffect, useRef, type ReactElement } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-const LINKS = [
-  { path: '/about',    label: '회사소개' },
-  { path: '/business', label: '솔루션·서비스' },
-  { path: '/contact',  label: '국민소통' },
+type SimpleLink    = { kind: 'link';     path: string; label: string }
+type DropdownLink  = { kind: 'dropdown'; label: string; children: { path: string; label: string }[] }
+type NavItem       = SimpleLink | DropdownLink
+
+const LINKS: NavItem[] = [
+  { kind: 'link',     path: '/about',    label: '회사소개' },
+  { kind: 'link',     path: '/business', label: '솔루션·서비스' },
+  {
+    kind: 'dropdown',
+    label: '교육과정',
+    children: [
+      { path: '/curriculum/day25', label: '2.5일차 — 2026 개발 트렌드' },
+    ],
+  },
+  { kind: 'link',     path: '/contact',  label: '국민소통' },
 ]
 
 const Navbar = (): ReactElement => {
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const location = useLocation()
+  const [scrolled, setScrolled]       = useState(false)
+  const [mobileOpen, setMobileOpen]   = useState(false)
+  const [dropOpen, setDropOpen]       = useState(false)
+  const dropRef                       = useRef<HTMLLIElement>(null)
+  const location                      = useLocation()
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40)
@@ -18,7 +31,18 @@ const Navbar = (): ReactElement => {
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  useEffect(() => { setMobileOpen(false) }, [location])
+  useEffect(() => { setMobileOpen(false); setDropOpen(false) }, [location])
+
+  // 외부 클릭 시 드롭다운 닫기
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropRef.current && !dropRef.current.contains(e.target as Node)) {
+        setDropOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
 
   return (
     <>
@@ -44,16 +68,52 @@ const Navbar = (): ReactElement => {
           </Link>
 
           <ul className="nav-links">
-            {LINKS.map(({ path, label }) => (
-              <li key={label}>
-                <Link
-                  to={path}
-                  className={location.pathname === path ? 'active' : ''}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
+            {LINKS.map((link) => {
+              if (link.kind === 'dropdown') {
+                // 드롭다운 메뉴
+                const isActive = link.children.some(c => location.pathname === c.path)
+                return (
+                  <li key={link.label} ref={dropRef} className="nav-dropdown-wrap">
+                    <button
+                      className={`nav-drop-btn${isActive ? ' active' : ''}${dropOpen ? ' open' : ''}`}
+                      onClick={() => setDropOpen(o => !o)}
+                      aria-haspopup="true"
+                      aria-expanded={dropOpen}
+                    >
+                      {link.label}
+                      <svg className="nav-drop-chevron" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    {dropOpen && (
+                      <ul className="nav-dropdown">
+                        {link.children.map((child) => (
+                          <li key={child.path}>
+                            <Link
+                              to={child.path}
+                              className={`nav-dropdown-item${location.pathname === child.path ? ' active' : ''}`}
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                )
+              }
+              // 일반 메뉴
+              return (
+                <li key={link.label}>
+                  <Link
+                    to={link.path}
+                    className={location.pathname === link.path ? 'active' : ''}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
 
           <div className="nav-cta">
@@ -73,10 +133,25 @@ const Navbar = (): ReactElement => {
         </div>
       </nav>
 
+      {/* 모바일 메뉴 */}
       <div className={`mobile-menu${mobileOpen ? ' open' : ''}`}>
-        {LINKS.map(({ path, label }) => (
-          <Link key={label} to={path}>{label}</Link>
-        ))}
+        {LINKS.map((link) => {
+          if (link.kind === 'dropdown') {
+            return (
+              <div key={link.label} className="mobile-submenu-group">
+                <div className="mobile-submenu-label">{link.label}</div>
+                {link.children.map((child) => (
+                  <Link key={child.path} to={child.path} className="mobile-submenu-item">
+                    {child.label}
+                  </Link>
+                ))}
+              </div>
+            )
+          }
+          return (
+            <Link key={link.label} to={link.path}>{link.label}</Link>
+          )
+        })}
         <Link to="/contact" className="btn btn-primary">국민소통</Link>
       </div>
     </>

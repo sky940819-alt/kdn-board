@@ -6,6 +6,7 @@ import About from './pages/About'
 import Business from './pages/Business'
 import News from './pages/News'
 import Contact from './pages/Contact'
+import CurriculumDay25 from './pages/CurriculumDay25'
 import type { ReactElement } from 'react'
 
 function App(): ReactElement {
@@ -20,6 +21,7 @@ function App(): ReactElement {
             <Route path="/business" element={<Business />} />
             <Route path="/news" element={<News />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/curriculum/day25" element={<CurriculumDay25 />} />
           </Routes>
         </main>
         <Footer />
